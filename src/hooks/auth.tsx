@@ -11,13 +11,13 @@ interface SignInCredentials {
   password: string;
 }
 
-interface AuthContextFormat {
+interface AuthContextData {
   user: object;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
 
-const AuthContext = createContext<AuthContextFormat>({} as AuthContextFormat);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
@@ -53,7 +53,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
-export function useAuth(): AuthContextFormat {
+export function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
